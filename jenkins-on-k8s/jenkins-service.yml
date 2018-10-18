@@ -1,0 +1,36 @@
+##########################
+#
+# This template aims to Orchestrate / Provision Jenkins Services
+#
+# @author zee <xeshan.ahmed@gmail.com>
+# @version 1.0
+#
+##########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: ui
+  selector:
+    app: master
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-discovery
+  namespace: jenkins
+spec:
+  selector:
+    app: master
+  ports:
+    - protocol: TCP
+      port: 50000
+      targetPort: 50000
+      name: slaves
